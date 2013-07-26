@@ -16,9 +16,18 @@
 # limitations under the License.
 #
 
+# Run force update when we use Vagabond test environment
+v_run=execute "apt-get-update" do
+  command "apt-get update"
+  ignore_failure true
+  action :nothing
+end
+
 # Instalation of ubuntu keyring package for Vagabond using
 k_pack=package "ubuntu-cloud-keyring" do
   action :nothing
 end
 
+v_run.run_action(:run)
 k_pack.run_action(:install)
+v_run.run_action(:run)
