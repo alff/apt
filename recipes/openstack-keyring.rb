@@ -22,12 +22,11 @@ v_run=execute "apt-get-update" do
   ignore_failure true
   action :nothing
 end
-
 # Instalation of ubuntu keyring package for Vagabond using
 k_pack=package "ubuntu-cloud-keyring" do
   action :nothing
+  notifies :run, "execute[apt-get-update]", :immediately
 end
 
 v_run.run_action(:run)
 k_pack.run_action(:install)
-v_run.run_action(:run)
